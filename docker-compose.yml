@@ -1,0 +1,44 @@
+version: '3.9'
+services:
+  api:
+    build:
+      context: ./server
+      dockerfile: dockerfile
+    volumes:
+      - ./server:/src:cached
+    depends_on:
+      - "db"
+    ports:
+      - '8080:8080'
+    tty: true
+    links:
+      - db
+  db:
+    platform: linux/x86_64
+    image: mysql:5.7
+    container_name: db
+    environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: db
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        TZ: 'Asia/Tokyo'
+    volumes:
+        - ./db/data:/var/lib/mysql
+        - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./db/sqls:/docker-entrypoint-initdb.d
+    ports:
+        - 3306:3306
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+
+
+  phpmyadmin:
+      container_name: phpmyadmin
+      image: phpmyadmin/phpmyadmin
+      environment:
+          - PMA_ARBITRARY=1
+          - PMA_HOSTS=database
+          - PMA_USER=${MYSQL_USER}
+          - PMA_PASSWORD=${MYSQL_PASSWORD}
+      ports:
+          - 8000:80
