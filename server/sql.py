@@ -25,8 +25,7 @@ class SQLhandler:
     def select_all(self):
         conn.ping(reconnect=True)
         cur = conn.cursor()
-        sql = "select * from students"
-        # sql = "insert into books values (NULL, "
+        sql = "select * from dictionary"
         cur.execute(sql)
         data = cur.fetchall()
         return data
