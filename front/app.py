@@ -11,13 +11,13 @@ from sql import SQLhandler
 sqlhandler = SQLhandler()
 app = Flask(__name__)
 
-@app.route("/")
-def index():
-    sqldatails=sqlhandler.select_all()
-    print(sqldata)
-    return sqldata
+# @app.route("/")
+# def index():
+#     sqldatails=sqlhandler.select_all()
+#     print(sqldata)
+#     return sqldata
 
-@app.route("/form")
+@app.route("/")
 def form():
     return render_template("form.html")
 

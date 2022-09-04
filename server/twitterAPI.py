@@ -39,7 +39,10 @@ def getsentence():
         print(i[1])
         sentences.append(i)
 
+   
     randint=random.randint(0,len(sentences)-1)
+    print(sentences)
+    print(randint)
     return sentences[randint][1]
 
 
@@ -48,7 +51,7 @@ def autoreply():
     client=ClientInfo()
 
     while True:
-        time.sleep(5)
+        time.sleep(60)
 
         id = REPLY_TO_ACCOUNT 
         try:
