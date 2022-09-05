@@ -52,7 +52,6 @@ def autoreply():
 
     while True:
         time.sleep(60)
-
         id = REPLY_TO_ACCOUNT 
         try:
             tweets = client.get_users_tweets(id=id, tweet_fields=['context_annotations','created_at','geo'])
@@ -70,11 +69,11 @@ def autoreply():
                         print("existed tweet")
                     break
         except:
-            print("error")
+            print("twitterAPI error")
 
 # 関数
 def CreateTweet(message):
     tweet = ClientInfo().create_tweet(text=message)
     return tweet
 
-autoreply()
+# autoreply()

@@ -44,6 +44,23 @@ services:
         - 3306:3306
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
 
+  catdb:
+    platform: linux/x86_64
+    image: mysql:5.7
+    container_name: catdb
+    environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: catdb
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        TZ: 'Asia/Tokyo'
+    volumes:
+        - ./catdb/data:/var/lib/mysql
+        - ./catdb/my.cnf:/etc/mysql/conf.d/my.cnf
+        - ./catdb/sqls:/docker-entrypoint-initdb.d
+    ports:
+        - 3304:3304
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
 
   phpmyadmin:
       container_name: phpmyadmin

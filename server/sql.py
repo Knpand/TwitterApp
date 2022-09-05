@@ -29,3 +29,5 @@ class SQLhandler:
         cur.execute(sql)
         data = cur.fetchall()
         return data
+
+ 
