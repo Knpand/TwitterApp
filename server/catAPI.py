@@ -27,7 +27,7 @@ def ClientInfo():
                            consumer_key    = os.getenv("API_KEY_GIRL"),
                            consumer_secret = os.getenv("API_SECRET_GIRL"),
                            access_token    =os.getenv("ACCESS_TOKEN_GIRL"),
-                           access_token_secret =  os.getenv("ACCESS_TOKEN_SECRET_GIRLT"),
+                           access_token_secret =  os.getenv("ACCESS_TOKEN_SECRET_GIRL"),
                           )
     return client
 
@@ -35,10 +35,11 @@ def ClientInfo():
 def autoreply():
     new_tweet_ID=""
     client=ClientInfo()
+    # a = client.create_tweet(text="Twitterしか勝たん")
     id = REPLY_TO_ACCOUNT 
     while True:
         try:
-            time.sleep(10)
+            time.sleep(5)
             tweets = client.get_users_tweets(id=id, tweet_fields=['context_annotations','created_at','geo'])
 
             for tweet in tweets.data:
@@ -53,7 +54,11 @@ def autoreply():
                         stud_obj = json.loads(response)
                         response = requests.post('https://chatbot-api.userlocal.jp/api/character', data={'key': CHATBOTKEY_GIRL,'message':stud_obj['result'],'character_type':"cat"}).text
                         stud_obj = json.loads(response)
-                        response = client.create_tweet(text=stud_obj, in_reply_to_tweet_id=new_tweet_ID)
+                        response = client.create_tweet(text=stud_obj["result"], in_reply_to_tweet_id=new_tweet_ID)
+
+                    # mes="@"+res.author.screen_name+"\n"
+                    # mes=mes+stud_obj["result"]
+                    # api.update_status(mes,in_reply_to_status_id = res.id)
                     else:
                         print("existed tweet")
                     break
